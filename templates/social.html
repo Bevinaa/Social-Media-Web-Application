@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #a06483, #773d7a);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .profile-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .profile {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            width: 300px;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .profile:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .profile:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        .profile img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            transition: transform 0.3s;
+        }
+
+        .profile img:hover {
+            transform: scale(1.1);
+        }
+
+        .username {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+
+        .email {
+            margin-bottom: 15px;
+            color: #777;
+            font-size: 1em;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            background-color: #5fb9da;
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            outline: none;
+            font-size: 1em;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .button:hover {
+            background-color: #406d9e;
+        }
+
+        .button:active {
+            background-color: #1a6ec2;
+            transform: scale(0.95);
+        }
+
+        .button:focus {
+            box-shadow: 0 0 0 4px rgba(40, 82, 167, 0.4);
+        }
+        
+    </style>
+    
+    
+</head>
+<body> 
+    <div class="profile-container">
+        {% for user in user_data %}
+            {% if user.get('name') and user.get('email') %}
+                <div class="profile">
+                    <img src="{{ url_for('static', filename='pp2.jpg') }}" alt="Profile Picture">
+                    <div class="username">{{ user['name'] }}</div>
+                    <div class="email">{{ user['email'] }}</div>
+                    <div class="button-container">
+                        <form action="{{ url_for('follow', followed_user_id=user['id']) }}" method="post">
+                            <button type="submit" id="follow-button-{{ user['id'] }}" class="button follow-button">Follow</button>
+                        </form>
+                        <a href="{{ url_for('my_profile', user_id=user['id']) }}" class="button">View Profile</a>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var followButtons = document.querySelectorAll('.follow-button');
+            followButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    button.textContent = 'FOLLOWING';
+                });
+            });
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.follow-button').click(function() {
+                var button = $(this);
+                var userId = button.data('user-id');
+                $.post('/follow/' + userId, function(data, status) {
+                    if (status === 'success') {
+                        button.text('Following');
+                        button.prop('disabled', true); // Disable the button after following
+                    }
+                });
+            });
+        });
+    </script>
+    
+</body>
+</html>

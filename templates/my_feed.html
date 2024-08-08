@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Feed</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-rF79UGJ8CX5RjV5Nczk8v2vTp49epYWMyr/XSHxhJiEtFN4x+oS+ig==" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap">
+    <script src="https://kit.fontawesome.com/9f1e7e623a.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            background-color: #e8d8e4;
+            background-size: auto;
+            background-attachment: fixed;
+        }
+        header {
+            position: relative;
+        }
+        .fa-paw {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: calc(100% + 5px); /* Adjust the distance between h1 and icon */
+        }
+        h1.cursive-header {
+            font-family: 'Comic Sans MS', cursive;
+            font-size: 50px;
+            font-style: italic;
+            color: white;
+            letter-spacing: 0.1em;
+            margin-top: -5px;
+            margin-left: -380px; /* Adjust this value as needed */
+            width: 1200px; /* Set width to center the text */
+            text-align: center; /* Center the text within the header */
+            position: relative; /* Ensure it stays in the document flow */
+            animation: glitter 1.5s infinite;
+        }
+    
+        @keyframes glitter {
+            0%, 100% {
+                text-shadow: 
+                    0 0 5px #fff, 
+                    0 0 10px #fff, 
+                    0 0 15px #ff00ff, 
+                    0 0 20px #ff00ff, 
+                    0 0 25px #ff00ff, 
+                    0 0 30px #ff00ff, 
+                    0 0 35px #ff00ff;
+            }
+            50% {
+                text-shadow: 
+                    0 0 5px #fff, 
+                    0 0 10px #ff00ff, 
+                    0 0 15px #ff00ff, 
+                    0 0 20px #ff00ff, 
+                    0 0 25px #ff00ff, 
+                    0 0 30px #ff00ff, 
+                    0 0 35px #ff00ff;
+            }
+        }
+    
+        header {
+            background-color: #b3568a;
+            padding: 15px 25px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            height: 60px;
+            z-index: 1000;
+            font-size: 60px;
+            text-align: center; /* Align text to center */
+            font-family: 'STCaiyun',  'Copperplate', 'fantasy', Arial, sans-serif; /* Change font style */
+        }
+
+        .search-icon {
+            position: absolute;
+            top: 50%;
+            right: 295px; /* Adjust this value to position the search icon */
+            transform: translateY(-50%);
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .search-bar {
+            position: absolute;
+            top: 50%;
+            right: 80px; /* Adjust this value to position the empty horizontal bar */
+            transform: translateY(-50%);
+            width: 250px; /* Adjust the width of the empty horizontal bar */
+            height: 30px; /* Adjust the height to make it more visible */
+            background-color: #ffffffa4;
+            border-radius: 8px; /* Adjust the border-radius to make it oval-shaped */
+        }
+    
+        header h1 {
+            font-family: 'Comic Sans MS', cursive; /* Change font style for h1 inside header */
+        }
+    
+        .container {
+            margin-left: 180px; /* Adjusted margin for the sidebar */
+            max-width: calc(900px - 10px - 10px); /* Adjust for sidebar and right sidebar width */
+            margin-right: auto;
+            margin-top: 70px; /* Adjusted top margin to account for the fixed header */
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .content {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .post-container {
+            flex: 1;
+            margin-right: 10px; /* Increased margin to decrease textarea width */
+        }
+
+        .post-container textarea {
+            width: 100%;
+            max-width: 600px; /* Adjust this value as needed */
+            height: 100px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+            
+        .post {
+            background-color: #fff;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: calc(50% - 20px);
+            flex: 1 1 calc(50% - 20px); 
+        }
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .post-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .post-header .author {
+            font-weight: bold;
+        }
+        .post-content {
+            margin-bottom: 10px;
+        }
+        .post-image {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+        }
+        .post-actions button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+        .post-actions button span {
+            margin-left: 5px;
+        }
+        .post-actions .liked {
+            color: red;
+        }
+        button {
+            background-color: #f7f9f9; 
+            border: none;
+            color: black;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .sidebar {
+            position: fixed;
+            top: 10px;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            width: 100px;
+            height: 100vh; /* Full viewport height */
+            background-color: #b3568a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; 
+            z-index: 999;
+        }
+        .right-sidebar {
+            position: fixed;
+            top: 90px; /* Adjusted top position to account for the header's height */
+            right: 0;
+            width: 350px;
+            height: calc(100vh - 60px); /* Adjusted height to fill the remaining viewport */
+            background-color: #ffffff;
+            z-index: 1001; /* Ensure it's above the header */
+            overflow-y: auto; /* Allows scrolling if content exceeds the sidebar height */
+        }
+        .fields-box {
+            display: flex;
+            flex-wrap: wrap;
+            background-color: #9d5ca0; /* Purple background color */
+            padding: 10px; /* Add padding */
+            border-radius: 5px; /* Rounded corners */
+        }
+
+        .field-option {
+            flex: 0 0 calc(5% - 10px); /* Adjust the width as needed */
+            margin: 5px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            background-color: #fff; /* White background color */
+            color: #91579d; /* Purple text color */
+            border-radius: 5px; /* Rounded corners */
+            text-align: center; /* Align text to center */
+        }
+        .ad-section {
+            margin-top: 20px;
+        }
+
+        #ad-image-container img {
+            max-width: 100%;
+        }
+        .field-option:hover {
+            background-color: #6f486b; /* Purple background color */
+            color: #fff; /* White text color */
+        }
+        .profile-button {
+            width: 50px;
+            height: 50px;
+            background-color: #fff;
+            border-radius: 50%;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 50px; /* Adjust the margin to move the buttons upward */
+            padding: 5px; /* Adjust the padding to decrease the gap */
+            transition: transform 0.2s ease-in-out, text-shadow 0.3s;
+            margin-bottom: 5px;
+            position: relative; /* For positioning the hover text */
+        }
+        .profile-button:hover {
+            transform: scale(1.1);
+            animation: glitter 1.5s infinite;
+        }
+        .profile-button:hover::after {
+            content: attr(data-text); 
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            white-space: nowrap;
+            font-size: 15px;
+            font-family: 'Comic Sans MS', cursive; 
+        }
+        @keyframes glitter {
+            0%, 100% {
+                text-shadow: 
+                    0 0 5px #fff, 
+                    0 0 10px #fff, 
+                    0 0 15px #ff00ff, 
+                    0 0 20px #ff00ff, 
+                    0 0 25px #ff00ff, 
+                    0 0 30px #ff00ff, 
+                    0 0 35px #ff00ff;
+            }
+            50% {
+                text-shadow: 
+                    0 0 5px #fff, 
+                    0 0 10px #ff00ff, 
+                    0 0 15px #ff00ff, 
+                    0 0 20px #ff00ff, 
+                    0 0 25px #ff00ff, 
+                    0 0 30px #ff00ff, 
+                    0 0 35px #ff00ff;
+            }
+        }
+        .profile-button:nth-child(1) {
+            background-image: url("../static/pp2.jpg");
+            background-size: contain; /* Adjust image size */
+            background-repeat: no-repeat; /* Prevent repeating */
+            background-position: center; /* Center the background */
+        }       
+        .profile-button:nth-child(2) {
+            background-image: url("../static/socialpage.png");
+            background-size: contain; /* Adjust image size */
+            background-repeat: no-repeat; /* Prevent repeating */
+            background-position: center; /* Center the background */
+        }
+        .profile-button:nth-child(3) {
+            background-image: url("../static/notifications.png");
+            background-size: contain; /* Adjust image size */
+            background-repeat: no-repeat; /* Prevent repeating */
+            background-position: center; /* Center the background */
+        }
+        .profile-button:nth-child(4) {
+            background-image: url("../static/youtube.jpg");
+            background-size: contain; /* Adjust image size */
+            background-repeat: no-repeat; /* Prevent repeating */
+            background-position: center; /* Center the background */
+        }
+        .profile-button:nth-child(5) {
+            background-image: url("../static/cam2.jpg");
+            background-size: contain; /* Adjust image size */
+            background-repeat: no-repeat; /* Prevent repeating */
+            background-position: center; /* Center the background */
+        }
+        .sidebar-title{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            background-color: #bdafca; 
+            text-align: center; /* Align text to center */
+        }
+        .right-sidebar .sidebar-title h4 {
+            color: white;
+            text-align: center;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+        }    
+        .ad-section h4{
+            color:rgb(146, 16, 122);
+            text-align: center;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+        }
+        .sidebar-title a{
+            text-decoration: none;
+            color: #bdafca;
+            font-size: 12px;
+            text-align: center; /* Align text to center */
+        }
+        .event{
+            display: flex;
+            font-size: 14px;
+            margin-bottom: 20px;
+            background-color:#9d5ca0; /* Purple background color */
+            color: #fff; /* White text color */
+            border-radius: 5px; /* Rounded corners */
+            padding: 10px; /* Add padding */
+        }
+        .left-event{
+            border-radius: 10px;
+            height: 65px;
+            width: 65px;
+            margin-right: 15px;
+            padding-top: 10px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            background-color: #cfafd0; /* White background color */
+        }
+        .event p{
+            font-size: 12px;
+        }
+        .event a{
+            font-size: 12px;
+            text-decoration: none;
+            color: #1876f2;
+        }
+        .left-event span{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background:  #8a2be2;
+            color: #fff;
+            font-size: 10px;
+            padding: 4px 0;
+        }
+
+        .add-event-section {
+            background-color: #a980ab;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .add-event-section h4 {
+            margin: 0;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .add-event-section input[type="date"] {
+            padding: 8px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 5px;
+            background-color: #fff; /* White background */
+            color: #a980ab; /* Text color */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow */
+        }
+
+        .add-event-section input[type="text"] {
+            width: calc(100% - 26px);
+            padding: 8px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 5px;
+            background-color: #fff; /* White background */
+            color: #a980ab; /* Text color */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow */
+        }
+
+        .add-event-section button {
+            background-color: #692f75;
+            color:#fff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease; /* Smooth transition */
+        }
+
+        .add-event-section button:hover {
+            background-color: #512564; /* Darken color on hover */
+        }
+        .post-input-container {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+        .post-input-container textarea {
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            resize: none;
+            margin-bottom: 10px;
+        }
+        .image-preview {
+            display: none;
+            margin-top: 20px;
+        }
+        .add-post-links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+        .add-post-links a, .add-post-links label {
+            display: flex;
+            align-items: center;
+            gap: 5px; 
+            text-decoration: none;
+            color: #333;
+        }
+        .add-post-links img {
+            width: 24px;
+            height: 24px;
+            object-fit: cover; 
+        }
+        .add-post-links input[type="file"] {
+            display: none;
+        }
+        .add-post-links a:hover {
+            color: #1876f2;
+        }
+        .add-post-links a:hover img {
+            filter: brightness(0.8);
+        }
+        .fa-ghost{
+            color:#ffffff;
+            font-size: 40px;
+        }
+        
+        .modal-content {
+            max-width: 80%;
+            margin: auto;
+            display: block;
+            position: relative;
+            overflow: auto; 
+            padding-top: 40px; 
+            margin-bottom: 20px;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover {
+            color: #ccc;
+        }
+        .notification-box {
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            max-height: 200px;
+            overflow-y: auto;
+            max-width: 300px; 
+        }
+
+        .notification-content {
+            margin-bottom: 10px;
+        }
+
+        .close-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+        .notification-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 3px 6px;
+            font-size: 12px;
+        }
+      
+    </style>
+</head>
+<body>
+
+    <header> 
+        <h1 class="cursive-header"> <i class="fa-solid fa-ghost" style="color: #ffffff;"></i> friendzy </h1>
+        <i class="fa fa-search search-icon" aria-hidden="true"></i>
+        <div class="search-bar"></div>
+    </header>
+
+    <div class="sidebar">
+        <button class="profile-button" data-text="My Profile" onclick="window.location.href = '{{ url_for('my_profile', user_id=user_id) }}'"></button>
+        <button class="profile-button" data-text="Social" onclick="window.location.href = '{{ url_for('social', user_id=user_id) }}'"></button>
+        <button class="profile-button" data-text="Notifications" onclick="toggleNotifications()">
+            <span class="notification-count">{{ notifications|length }}</span> <!-- Notification count -->
+        </button>
+        <button class="profile-button" data-text="YouTube" onclick="redirectToPage('https://www.youtube.com')"></button>
+        <button id="cameraButton" data-text="Open Camera" class="profile-button" onclick="openCamera()"></button>
+    </div>
+    <div id="notificationBox" class="notification-box" style="display: none;">
+        <div class="notification-content">
+            <h3>Notifications</h3>
+            {% for notification in notifications %}
+            <li>{{ notification }}</li>
+            {% endfor %}
+        </div>
+        <button class="close-button" onclick="toggleNotifications(); removeNotificationCount()">Close</button>
+    </div>
+
+    <div class="container">
+        <div class="post-input-container">
+            <textarea rows="3" placeholder="What's on your mind, {{ user['name'] }}?"></textarea>
+            <div class="add-post-links">
+                <a href="#" onclick="redirectToCamera()"> <img src="{{ url_for('static', filename='live.jpeg') }}">Live Video</a>
+                <input type="hidden" id="userIdInput" value="{{ user_id }}">
+                <label for="fileInput"> <img src="{{ url_for('static', filename='picc.jpeg') }}">Photo/Video</label>
+                <input type="file" id="fileInput" style="display: none;" accept="image/*" onchange="handleFileSelect(event)">
+                <a href="#"> <img src="{{ url_for('static', filename='feeling.jpeg') }}">Feeling/Activity</a>
+                <a href="#" onclick="createPost('{{ user['username'] }}')"> <img src="{{ url_for('static', filename='addpost.png') }}">Add Post</a>
+            </div>            
+        </div>
+
+     <!-- Modal -->
+     <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+        
+    <div class="post" data-post-id="1">
+        <div class="post-header">
+            <img src="{{ url_for('static', filename='fp2.jpg') }}" alt="Profile Picture">
+            <div class="author">Lebanen</div>
+        </div>
+        <div class="post-content">
+            Travel makes one modest. You see what a tiny place you occupy in the world — Gustave Flaubert
+        </div>
+        <img class="post-image" src="{{ url_for('static', filename='fp1.jpg') }}" alt="Post Image">
+        <div class="post-actions">
+            <button class="like-button"><span>&#x2764;</span> Like <span class="like-count">0</span></button>
+            <button class="comment-button" onclick="toggleComments(1)"><span>&#x1F4AC;</span> Comment</button>
+            <button><span>&#x1F4E5;</span> Share</button>
+        </div>
+        <div class="comments-section" id="comments-1" style="display: none;">
+            <div class="comments-list"></div>
+            <textarea class="comment-input" placeholder="Write a comment..."></textarea>
+            <button class="submit-comment-button" onclick="submitComment(1)">Submit</button>
+        </div>
+    </div>
+
+    <div class="post" data-post-id="2">
+        <div class="post-header">
+            <img src="{{ url_for('static', filename='fp2.jpg') }}" alt="Profile Picture">
+            <div class="author">Lebanon</div>
+        </div>
+        <div class="post-content">
+            Nature is not a place to visit. It is home.
+        </div>
+        <img class="post-image" src="{{ url_for('static', filename='fp6.webp') }}" alt="Post Image">
+        <div class="post-actions">
+            <button class="like-button"><span>&#x2764;</span> Like <span class="like-count">0</span></button>
+            <button class="comment-button" onclick="toggleComments(2)"><span>&#x1F4AC;</span> Comment</button>
+            <button><span>&#x1F4E5;</span> Share</button>
+        </div>
+        <div class="comments-section" id="comments-2" style="display: none;">
+            <div class="comments-list"></div>
+            <textarea class="comment-input" placeholder="Write a comment..."></textarea>
+            <button class="submit-comment-button" onclick="submitComment(2)">Submit</button>
+        </div>
+    </div>
+
+    <div class="post" data-post-id="3">
+        <div class="post-header">
+            <img src="{{ url_for('static', filename='fp3.jpg') }}" alt="Profile Picture">
+            <div class="author">Stefen</div>
+        </div>
+        <div class="post-content">
+            No caption needed. With my girls.
+        </div>
+        <img class="post-image" src="{{ url_for('static', filename='fp.webp') }}" alt="Post Image">
+        <div class="post-actions">
+            <button class="like-button"><span>&#x2764;</span> Like <span class="like-count">0</span></button>
+            <button class="comment-button" onclick="toggleComments(3)"><span>&#x1F4AC;</span> Comment</button>
+            <button><span>&#x1F4E5;</span> Share</button>
+        </div>
+        <div class="comments-section" id="comments-3" style="display: none;">
+            <div class="comments-list"></div>
+            <textarea class="comment-input" placeholder="Write a comment..."></textarea>
+            <button class="submit-comment-button" onclick="submitComment(3)">Submit</button>
+        </div>
+    </div>
+
+    </div>
+
+    <div class="right-sidebar">
+        <div class="sidebar-title">
+            <h4> Advertisement Fields </h4>
+        </div>
+        <div class="fields-box">
+            <div class="field-option" onclick="generateAdImageURL('education')">Education</div>
+            <div class="field-option" onclick="generateAdImageURL('skincare')">Skincare</div>
+            <div class="field-option" onclick="generateAdImageURL('fashion')">Fashion</div>
+            <div class="field-option" onclick="generateAdImageURL('groceries')">Groceries</div>
+            <div class="field-option" onclick="generateAdImageURL('electrical_appliances')">ElectricalAppliances</div>
+            <div class="field-option" onclick="generateAdImageURL('beauty_products')">BeautyProducts</div>
+            <div class="field-option" onclick="generateAdImageURL('accesories')">Accesories</div>
+            <!-- Add more field options as needed -->
+        </div>
+        <!-- Ad section -->
+        <div class="ad-section">
+            <h4> Advertisement </h4>
+            <div id="ad-image-container"></div>
+        </div>
+        <div class="sidebar-title ">
+            <h4> Events </h4>
+        </div>
+        <div class="sidebar-title add-event-section">
+            <h4> Add Event </h4>
+        </div>
+        <div class="events-container" id="events-container">
+            <div class="event" id="add-event">
+                <div class="left-event">
+                    <input type="date" id="event-date" placeholder="Select Date">
+                </div>
+                <div class="right-event">
+                    <input type="text" id="event-title" placeholder="Event Title">
+                    <p> <i class="fa-solid fa-location-dot"></i> <input type="text" id="event-location" placeholder="Event Location"></p>
+                    <button onclick="addEvent()">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>          
+    <script>
+
+function toggleNotifications() {
+var notificationBox = document.getElementById('notificationBox');
+if (notificationBox.style.display === 'none') {
+    var buttonPosition = document.querySelector('.profile-button[data-text="Notifications"]').getBoundingClientRect();
+    notificationBox.style.top = (buttonPosition.bottom + window.scrollY) + 'px';
+    notificationBox.style.left = buttonPosition.left + 'px';
+    notificationBox.style.display = 'block';
+} else {
+    notificationBox.style.display = 'none';
+}
+}
+
+function removeNotificationCount() {
+var notificationCount = document.querySelector('.notification-count');
+if (notificationCount) {
+notificationCount.parentNode.removeChild(notificationCount);
+}
+}
+
+const adImages = {
+    education: ['edu.jpeg', 'edu1.jpeg', 'edu2.jpeg', 'edu3.jpeg', 'edu4.jpeg', 'edu5.jpeg'],
+    skincare: ['skincare.jpeg', 'skin1.jpeg', 'skin2.jpeg', 'skin3.jpeg', 'skin4.jpeg', 'skin5.jpeg'],
+    fashion: ['fashion.jpeg', 'fashion1.jpeg', 'fashion2.jpeg', 'fashion3.jpeg', 'fashion4.jpeg', 'fashion5.jpeg'],
+    groceries: ['groceries.jpeg', 'groceries1.jpeg', 'groceries2.jpeg', 'groceries3.jpeg', 'groceries4.jpeg', 'groceries5.jpeg'],
+    electrical_appliances: ['ea.jpeg', 'ea1.jpeg', 'ea2.jpeg', 'ea3.jpeg', 'ea4.jpeg', 'ea5.jpeg'],
+    beauty_products: ['bp.jpeg', 'bp1.jpeg', 'bp2.jpeg', 'bp3.jpeg', 'bp4.jpeg', 'bp5.jpeg'],
+    accessories: ['acc.jpeg', 'acc1.jpeg', 'acc2.jpeg', 'acc3.jpeg', 'acc4.jpeg', 'acc5.jpeg']
+};
+
+function generateAdImageURL(field) {
+    const randomIndex = Math.floor(Math.random() * adImages[field].length);
+    const adImageUrl = adImages[field][randomIndex];
+    console.log('Generating ad image for field:', field);
+    document.getElementById('ad-image-container').innerHTML = `<img src="../static/${adImageUrl}" alt="${field} Ad">`;
+    return adImageUrl;
+}
+
+function generateAdsAutomatically() {
+    const fields = Object.keys(adImages);
+    let currentIndex = 0;
+
+    setInterval(() => {
+        const currentField = fields[currentIndex];
+        generateAdImageURL(currentField);
+        currentIndex = (currentIndex + 1) % fields.length;
+    }, 5000); 
+}
+
+generateAdsAutomatically();
+
+document.addEventListener('DOMContentLoaded', function() {
+    const likeCounts = JSON.parse(sessionStorage.getItem('likeCounts')) || {};
+    const likedPosts = JSON.parse(sessionStorage.getItem('likedPosts')) || {};
+    document.querySelectorAll('.post').forEach(post => {
+        const postId = post.getAttribute('data-post-id');
+        const likeCountSpan = post.querySelector('.like-count');
+        const likeButton = post.querySelector('.like-button');
+        if (likeCounts[postId]) {
+            likeCountSpan.textContent = likeCounts[postId];
+        }
+        if (likedPosts[postId]) {
+            likeButton.classList.add('liked');
+        }
+    });
+    document.querySelectorAll('.like-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const post = this.closest('.post');
+            const postId = post.getAttribute('data-post-id');
+            const likeCountSpan = post.querySelector('.like-count');
+            let count = parseInt(likeCountSpan.textContent, 10);
+            if (likedPosts[postId]) {
+                count--;
+                delete likedPosts[postId];
+                this.classList.remove('liked');
+            } else {
+                count++;
+                likedPosts[postId] = true;
+                this.classList.add('liked');
+            }
+            likeCountSpan.textContent = count;
+            likeCounts[postId] = count;
+            sessionStorage.setItem('likeCounts', JSON.stringify(likeCounts));
+            sessionStorage.setItem('likedPosts', JSON.stringify(likedPosts));
+        });
+    });
+});
+
+function createPost(username) {
+    const captionInput = document.querySelector('.post-input-container textarea');
+    const caption = captionInput.value.trim();
+    const name = username;
+    const userId = document.getElementById('userIdInput').value;
+
+    if (!caption) {
+        alert('Please enter a caption.');
+        return;
+    }
+
+    const selectedFile = document.querySelector('#fileInput').files[0];
+
+        const newPost = document.createElement('div');
+    newPost.classList.add('post');
+
+    const postId = document.querySelectorAll('.post').length + 1;
+    newPost.setAttribute('data-post-id', postId);
+
+    newPost.innerHTML = `
+        <div class="post-header">
+            <img src="{{ url_for('static', filename='pp2.jpg') }}" alt="Profile Picture">
+            <div class="author">${name}</div>
+        </div>
+        <div class="post-content">${caption}</div>
+        <img class="post-image" src="${URL.createObjectURL(selectedFile)}" alt="Post Image">
+        <div class="post-actions">
+            <button class="like-button"><span>&#x2764;</span> Like <span class="like-count">0</span></button>
+            <button class="comment-button" onclick="toggleComments(4)"><span>&#x1F4AC;</span> Comment</button>
+            <button><span>&#x1F4E5;</span> Share</button>
+        </div>
+        <div class="comments-section" id="comments-4" style="display: none;">
+                <div class="comments-list"></div>
+                <textarea class="comment-input" placeholder="Write a comment..."></textarea>
+                <button class="submit-comment-button" onclick="submitComment(4)">Submit</button>
+            </div>
+    `;
+
+    
+    const likeButton = newPost.querySelector('.like-button');
+
+// Check if event listener is already added
+if (!likeButton.dataset.likeListener) {
+    likeButton.addEventListener('click', likeButtonClickHandler);
+    likeButton.dataset.likeListener = true; // Set flag to indicate event listener is added
+}
+
+function likeButtonClickHandler() {
+    const likeCount = newPost.querySelector('.like-count');
+    let currentCount = parseInt(likeCount.textContent);
+    if (likeButton.classList.contains('liked')) {
+        currentCount--; // Decrease count if already liked
+        likeButton.classList.remove('liked');
+    } else {
+        currentCount++; // Increase count if not liked
+        likeButton.classList.add('liked');
+    }
+    likeCount.textContent = currentCount;
+}
+
+    const container = document.querySelector('.container');
+    container.appendChild(newPost);
+    captionInput.value = '';
+
+    var modal = document.getElementById("imageModal");
+
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+
+    function openModal(imageUrl) {
+        var modalImage = document.getElementById("modalImage");
+        modalImage.src = imageUrl;
+        modal.style.display = "block";
+    }
+    function closeModal() {
+        modal.style.display = "none";
+    }
+    closeModal();
+    const formData = new FormData();
+    formData.append('user_id', userId);
+    formData.append('username', name);
+    formData.append('caption', caption);
+    formData.append('image', selectedFile);
+
+    fetch('/save_post', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error('Network response was not ok.');
+    })
+    .then(data => {
+    console.log(data.message);
+    })
+    .catch(error => {
+        console.error('Error saving post:', error);
+    });
+    
+    if (!confirm('Are you sure you want to post this?')) {
+        return;
+    }
+}
+    function addEvent() {
+        const eventDateInput = document.getElementById('event-date');
+        const eventTitleInput = document.getElementById('event-title');
+        const eventLocationInput = document.getElementById('event-location');
+
+        let eventDate = eventDateInput.value;
+        let eventTitle = eventTitleInput.value;
+        let eventLocation = eventLocationInput.value;
+
+        if (!eventDate || !eventTitle || !eventLocation) {
+            alert('Please fill in all fields.');
+            return;
+        }
+
+        const eventDiv = document.createElement('div');
+        eventDiv.classList.add('event');
+        eventDiv.setAttribute('data-event-date', eventDate);
+        eventDiv.innerHTML = `
+            <div class="left-event">
+                <h3>${eventDate.split('-')[2]}</h3>
+                <span>${getMonthName(eventDate.split('-')[1])}</span>
+            </div>
+            <div class="right-event">
+                <h4>${eventTitle}</h4>
+                <p><i class="fa-solid fa-location-dot"></i>${eventLocation}</p>
+                <a href="#">More Info</a>
+            </div>
+        `;
+
+        const eventsContainer = document.getElementById('events-container');
+        eventsContainer.appendChild(eventDiv);
+
+        eventDateInput.value = '';
+        eventTitleInput.value = '';
+        eventLocationInput.value = '';
+    }
+
+    function redirectToCamera() {
+            openCamera(); 
+        }
+
+    function getMonthName(monthNumber) {
+        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        return monthNames[parseInt(monthNumber, 10) - 1];
+    }function redirectToPage(page) {
+            window.location.href = page;
+        }
+        function openCamera() {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function(stream) {
+                    const videoElement = document.createElement('video');
+                    videoElement.srcObject = stream;
+                    videoElement.autoplay = true;
+                    videoElement.style.width = '100%';
+                    videoElement.style.height = '100%';
+                    document.body.appendChild(videoElement);
+                })
+                .catch(function(error) {
+                    console.error('Error accessing the camera:', error);
+                });
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const likeCounts = JSON.parse(sessionStorage.getItem('likeCounts')) || {};
+            const likedPosts = JSON.parse(sessionStorage.getItem('likedPosts')) || {};
+            document.querySelectorAll('.post').forEach(post => {
+                const postId = post.getAttribute('data-post-id');
+                const likeCountSpan = post.querySelector('.like-count');
+                const likeButton = post.querySelector('.like-button');
+                if (likeCounts[postId]) {
+                    likeCountSpan.textContent = likeCounts[postId];
+                }
+                if (likedPosts[postId]) {
+                    likeButton.classList.add('liked');
+                }
+            });
+            document.querySelectorAll('.like-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const post = this.closest('.post');
+                    const postId = post.getAttribute('data-post-id');
+                    const likeCountSpan = post.querySelector('.like-count');
+                    let count = parseInt(likeCountSpan.textContent, 10);
+                    if (likedPosts[postId]) {
+                        count--; // Unlike the post
+                        delete likedPosts[postId];
+                    } else {
+                        count++; // Like the post
+                        likedPosts[postId] = true;
+                    }
+                    likeCountSpan.textContent = count;
+                    likeCounts[postId] = count;
+                    sessionStorage.setItem('likeCounts', JSON.stringify(likeCounts));
+                    sessionStorage.setItem('likedPosts', JSON.stringify(likedPosts));
+                    this.classList.toggle('liked');
+                });
+            });
+        });
+
+        function handleFileSelect(event) {
+            const selectedFile = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const modal = document.getElementById("imageModal");
+                const modalImg = document.getElementById("modalImage");
+                modal.style.display = "block";
+                modalImg.src = e.target.result;
+
+                const span = document.getElementsByClassName("close")[0];
+                span.onclick = function () {
+                    modal.style.display = "none";
+                }
+            }
+
+            if (selectedFile) {
+                reader.readAsDataURL(selectedFile);
+            }
+        }
+
+        function submitComment(postId) {
+    const commentsSection = document.getElementById(`comments-${postId}`);
+    const commentInput = commentsSection.querySelector('.comment-input');
+    const commentText = commentInput.value.trim();
+
+    if (commentText === "") {
+        alert("Please enter a comment.");
+        return;
+    }
+
+    const commentList = commentsSection.querySelector('.comments-list');
+    const newComment = document.createElement('div');
+    newComment.classList.add('comment');
+    newComment.textContent = commentText;
+
+    commentList.appendChild(newComment);
+    commentInput.value = '';
+
+    saveComment(postId, commentText);
+
+    commentInput.style.display = 'none';
+}
+
+function toggleComments(postId) {
+    const commentsSection = document.getElementById(`comments-${postId}`);
+    const commentInput = commentsSection.querySelector('.comment-input');
+
+    if (commentsSection.style.display === "none" || commentsSection.style.display === "") {
+        commentsSection.style.display = "block";
+        commentInput.style.display = "block";
+    } else {
+        commentsSection.style.display = "none";
+    }
+}
+
+function saveComment(postId, commentText) {
+    const comments = JSON.parse(sessionStorage.getItem('comments')) || {};
+    if (!comments[postId]) {
+        comments[postId] = [];
+    }
+    comments[postId].push(commentText);
+    sessionStorage.setItem('comments', JSON.stringify(comments));
+}
+
+function loadComments() {
+    const comments = JSON.parse(sessionStorage.getItem('comments')) || {};
+    for (const postId in comments) {
+        const commentsSection = document.getElementById(`comments-${postId}`);
+        if (commentsSection) {
+            const commentList = commentsSection.querySelector('.comments-list');
+            comments[postId].forEach(commentText => {
+                const comment = document.createElement('div');
+                comment.classList.add('comment');
+                comment.textContent = commentText;
+                commentList.appendChild(comment);
+            });
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadComments();
+});
+        
+    </script>
+</body>
+</html>
