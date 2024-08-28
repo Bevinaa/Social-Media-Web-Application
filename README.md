@@ -68,6 +68,14 @@ The application uses session-based notifications to alert users of new followers
 
 Feel free to fork this repository and submit pull requests to contribute to the project.
 
+## Contact
+
+For questions or further information, please contact:
+
+- **Name:** Bevina R
+- **Email:** bevina2110@gmail.com
+- **GitHub:** [yourusername](https://github.com/Bevinaa)
+
 ## Output of the Project 
 
 ![Screenshot 2024-06-09 221535](https://github.com/user-attachments/assets/90a2b03c-8b19-417e-9077-7d4c775a39bd)
