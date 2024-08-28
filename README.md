@@ -67,3 +67,28 @@ The application uses session-based notifications to alert users of new followers
 ## Contributions
 
 Feel free to fork this repository and submit pull requests to contribute to the project.
+
+## Output of the Project 
+
+![Screenshot 2024-06-09 221535](https://github.com/user-attachments/assets/90a2b03c-8b19-417e-9077-7d4c775a39bd)
+
+![Screenshot 2024-06-09 221707](https://github.com/user-attachments/assets/386741ce-a3d7-4a6a-b53b-8cd894105c51)
+
+![Screenshot 2024-06-09 221849](https://github.com/user-attachments/assets/6ed29b87-6c03-43ff-a25f-1dae53276db5)
+
+![Screenshot 2024-06-09 221949](https://github.com/user-attachments/assets/ee546bc1-b09f-4dab-97c2-19ed43651213)
+
+![Screenshot 2024-06-09 222044](https://github.com/user-attachments/assets/c9b47816-f64f-4367-9812-60ec30ef3ed6)
+
+![Screenshot 2024-06-09 222142](https://github.com/user-attachments/assets/3021b49e-ef57-44ee-ab99-40308207a5ef)
+
+![Screenshot 2024-06-09 222219](https://github.com/user-attachments/assets/dd1691b9-ad54-4a17-815d-36e5e6cf846d)
+
+![Screenshot 2024-06-09 222354](https://github.com/user-attachments/assets/69996e90-25b4-4906-8d87-33679bb7fb7d)
+
+![Screenshot 2024-06-09 222549](https://github.com/user-attachments/assets/c283b759-8aef-44d1-ab15-63bdfdb16317)
+
+
+
+
+
