@@ -74,7 +74,7 @@ For questions or further information, please contact:
 
 - **Name:** Bevina R
 - **Email:** bevina2110@gmail.com
-- **GitHub:** [yourusername](https://github.com/Bevinaa)
+- **GitHub:** https://github.com/Bevinaa
 
 ## Output of the Project 
 
